@@ -12,18 +12,19 @@ import 'package:gymrat_app/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    // tester:pumpWidget spoustí aplikaci
+    await tester.pumpWidget(MyApp());
 
-    // Verify that our counter starts at 0.
+    // expect(find.text('0'), findsOneWidget) zkontroluje, že je na obrazovce nula
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
 
-    // Tap the '+' icon and trigger a frame.
+    // tester.tap kliine na tlačítko plus
     await tester.tap(find.byIcon(Icons.add));
+    // tester.pump počká na překreslení obrazovky
     await tester.pump();
 
-    // Verify that our counter has incremented.
+    // Ověří, že se číslo změnilo na 1
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
