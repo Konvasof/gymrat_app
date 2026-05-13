@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async'; // Pro práci s časem
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:gymrat_app/screens/home_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:gymrat_app/screens/account_selection_screen.dart';
 
 // Stateful obsahuje časovou složku
 class WelcomeScreen extends StatefulWidget {
@@ -16,7 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();  
     // po půl vteříně spustíme funkci, která změní průhlednost textu
-    Future.delayed(const Duration(milliseconds: 3500), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       // Měníme stav, aby se text objevil
       setState(() {
         _pruhlednostTextu = 1.0;
@@ -48,21 +52,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   AnimatedOpacity(
                     opacity: _pruhlednostTextu, 
                     duration: const Duration(seconds: 2), 
-                    child: const Text(
+                    child: Text(
                       'Vítej v GymRat!',
-                      style: TextStyle(
-                        fontSize: 50, 
+                      style: GoogleFonts.bebasNeue(
+                        fontSize: 70, 
                         fontWeight: FontWeight.bold, 
                         color: Colors.white, 
-                        shadows: [
+                        letterSpacing: 2.0,
+                        shadows: const [
                           Shadow(
                             blurRadius: 10.0, // První, jemnější vrstva záře
-                            color: Colors.greenAccent, // Svítivě zelená barva
+                            color: Color.fromARGB(255, 0, 0, 0), // Svítivě zelená barva
                             offset: Offset(0, 0), // Žádný posun, svítí to přímo zpod textu
                           ),
                           Shadow(
                             blurRadius: 30.0, // Druhá, masivní vrstva záře
-                            color: Colors.greenAccent,
+                            color: Color.fromARGB(255, 244, 106, 8),
                             offset: Offset(0, 0),
                           ),
                         ],
@@ -82,7 +87,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                     ),
                     onPressed: () {
-                      print('Tlačítko stisknuto');
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const AccountSelectionScreen()
+                        ),
+                      );
                     },
                     child: const Text(
                       'Vytvořit účet', 
